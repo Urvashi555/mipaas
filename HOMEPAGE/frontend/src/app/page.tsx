@@ -1,11 +1,11 @@
-import AnnouncementBar from "@/components/AnnouncementBar";
+
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
 import PartnersSection from "@/components/PartnersSection";
 import PathwaysSection from "@/components/PathwaysSection";
 import ImpactSection from "@/components/ImpactSection";
 import DevelopmentsSection from "@/components/DevelopmentsSection";
-import TestimonialsSection from "@/components/TestimonialsSection";
+
 import Footer from "@/components/Footer";
 
 export default function Home() {
@@ -13,7 +13,7 @@ export default function Home() {
     <div className="relative">
       {/* Sticky header */}
       <div className="sticky top-0 z-50 w-full">
-        <AnnouncementBar />
+       
         <Navbar />
       </div>
 
@@ -35,7 +35,7 @@ export default function Home() {
         <DevelopmentsSection />
 
         {/* 6. Testimonials */}
-        <TestimonialsSection />
+     
       </main>
 
       {/* Footer */}

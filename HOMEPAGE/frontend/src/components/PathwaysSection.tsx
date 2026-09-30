@@ -1,36 +1,43 @@
 'use client';
 import { useState } from 'react';
+import Link from 'next/link';
 
 const pathways = [
   {
-    id: 'global-health',
-    title: 'Advancing Public Health Access for Tuberculosis, Pediatric TB & Beyond',
+    id: 'chest-xray',
+    title: 'Faster Reading of Chest X-rays',
     description:
-      'WHO-evaluated AI solutions to support clinicians in making quick and accurate diagnosis and treatment decisions. This provides global access to Tuberculosis, Silicosis, and Pediatric Tuberculosis care and real-time disease surveillance.',
+      'MiXR looks at a chest X-ray and scores possible findings such as pneumonia, pleural effusion and signs of tuberculosis. Highlighted areas show where it looked, and urgent scans move to the top of the list.',
     bg: 'bg-gradient-to-br from-[#0F2332] to-[#98AED9]/40',
-    image: 'https://qure-website-images.s3.ap-south-1.amazonaws.com/Global_Health_769fbf2085.webp',
+    image: '/hero/xray.jpg',
     accentColor: '#98AED9',
-    label: 'Global Health',
-  },
-  {
-    id: 'lung-cancer',
-    title: 'Accelerating Early Detection & Management of Lung Cancer',
-    description:
-      'The end-to-end Lung Cancer care continuum detects lung nodules early, measures for disease progression and manages cases to support clinicians, improving outcomes for patients. It also helps advance developments for lung health in the pharmaceutical industry.',
-    bg: 'bg-gradient-to-br from-[#008280] to-[#0E273A]',
-    image: 'https://qure-website-images.s3.ap-south-1.amazonaws.com/Lung_Cancer_56ad8974eb.webp',
-    accentColor: '#00DCCE',
-    label: 'Lung Cancer',
+    label: 'Chest X-ray',
+    href: '/products/mixr',
+    buttonText: 'Try MiXR',
   },
   {
     id: 'stroke',
-    title: 'Enabling Timely Intervention in Stroke Care',
+    title: 'Quicker Checks of Brain Scans in Stroke',
     description:
-      'An AI-powered care coordination suite to enable patient triage, ensuring seamless clinical coordination with real-time communication. It supports Hub & Spoke networks to facilitate timely stroke interventions by clinicians, anywhere.',
-    bg: 'bg-gradient-to-br from-[#008280] to-[#0A1823]',
-    image: 'https://qure-website-images.s3.ap-south-1.amazonaws.com/Stroke_d115ba6272.webp',
+      'MiStroke reviews head CT and MRI images for signs of bleeding or blocked blood flow and flags urgent cases, so the care team can decide on treatment sooner.',
+    bg: 'bg-gradient-to-br from-[#008280] to-[#0E273A]',
+    image: '/hero/mri.jpg',
     accentColor: '#00DCCE',
     label: 'Stroke Care',
+    href: '/products/mistroke',
+    buttonText: 'Try MiStroke',
+  },
+  {
+    id: 'doctor-review',
+    title: 'AI Drafts the Report, the Doctor Decides',
+    description:
+      'Every result comes with a draft report that the doctor can edit, download or print. MiPAAS supports the clinician\u2019s judgement and never replaces it.',
+    bg: 'bg-gradient-to-br from-[#008280] to-[#0A1823]',
+    image: '/hero/doctor.jpg',
+    accentColor: '#00DCCE',
+    label: 'Doctor in the Loop',
+    href: '/products',
+    buttonText: 'See all products',
   },
 ];
 
@@ -53,9 +60,10 @@ export default function PathwaysSection() {
             >
               {/* Background image */}
               <div className="absolute inset-0 z-0">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={card.image}
-                  alt={card.title}
+                  alt=""
                   className="w-full h-full object-cover opacity-60"
                   onError={(e) => { (e.currentTarget as HTMLElement).style.display = 'none'; }}
                 />
@@ -75,12 +83,12 @@ export default function PathwaysSection() {
                 <p className="text-sm text-gray-300 leading-relaxed">
                   {card.description}
                 </p>
-                <button
-                  type="button"
+                <Link
+                  href={card.href}
                   className="mt-3 rounded-full border border-white/80 px-6 py-2.5 text-xs font-semibold text-white hover:bg-white hover:text-[#0F2332] transition-colors w-fit"
                 >
-                  See How
-                </button>
+                  {card.buttonText}
+                </Link>
               </div>
             </div>
           ))}
@@ -94,6 +102,7 @@ export default function PathwaysSection() {
               <div
                 key={card.id}
                 onMouseEnter={() => setActiveCard(i)}
+                onFocus={() => setActiveCard(i)}
                 style={{
                   flex: isActive ? 2.2 : 1,
                   transition: 'flex 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
@@ -102,13 +111,12 @@ export default function PathwaysSection() {
               >
                 {/* Background image */}
                 <div className="absolute inset-0 z-0">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={card.image}
-                    alt={card.title}
+                    alt=""
                     className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-                    style={{
-                      opacity: isActive ? 0.75 : 0.45,
-                    }}
+                    style={{ opacity: isActive ? 0.75 : 0.45 }}
                     onError={(e) => { (e.currentTarget as HTMLElement).style.display = 'none'; }}
                   />
                   <div
@@ -135,19 +143,20 @@ export default function PathwaysSection() {
                     <div
                       className="overflow-hidden transition-all duration-500"
                       style={{
-                        maxHeight: isActive ? '200px' : '0px',
+                        maxHeight: isActive ? '220px' : '0px',
                         opacity: isActive ? 1 : 0,
                       }}
                     >
                       <p className="text-sm lg:text-base text-gray-300 leading-relaxed pt-2">
                         {card.description}
                       </p>
-                      <button
-                        type="button"
-                        className="mt-5 rounded-full border border-white px-7 py-2.5 text-sm font-semibold text-white hover:bg-white hover:text-[#008280] transition-colors"
+                      <Link
+                        href={card.href}
+                        tabIndex={isActive ? 0 : -1}
+                        className="mt-5 inline-block rounded-full border border-white px-7 py-2.5 text-sm font-semibold text-white hover:bg-white hover:text-[#008280] transition-colors"
                       >
-                        See How
-                      </button>
+                        {card.buttonText}
+                      </Link>
                     </div>
                   </div>
                 </div>

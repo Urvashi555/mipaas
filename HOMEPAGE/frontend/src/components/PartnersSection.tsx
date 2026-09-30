@@ -1,52 +1,69 @@
 'use client';
 
-const partnerLogos = [
-  'Fujifilm',
-  'Siemens Healthineers',
-  'Medtronic',
-  'AstraZeneca',
-  'Philips',
-  'Blackford Analysis',
-  'AWS Healthcare',
-  'Microsoft Health',
-  'GE HealthCare',
-  'Roche Diagnostics',
-  'Fujifilm',
-  'Siemens Healthineers',
-  'Medtronic',
-  'AstraZeneca',
+// What the platform detects and supports (no partner logos)
+const capabilityTags = [
+  'Pneumonia Detection',
+  'Tuberculosis Screening',
+  'Pleural Effusion',
+  'Pneumothorax',
+  'Cardiomegaly',
+  'Lung Nodule Detection',
+  'Atelectasis',
+  'Consolidation',
+  'Grad-CAM Heatmaps',
+  'DICOM Support',
+  'Deep Learning Models',
+  'Instant Triage',
 ];
 
-const complianceBadges = [
+// Replaces the FDA / CE / GDPR / HIPAA badges
+const trustBadges = [
   {
-    name: 'CE Mark',
-    src: 'https://qure-website-images.s3.ap-south-1.amazonaws.com/CE_updated_logo_06a2e47863.webp',
+    name: 'DICOM Compatible',
+    icon: (
+      <path d="M4 6h16M4 12h16M4 18h10" strokeLinecap="round" />
+    ),
   },
   {
-    name: 'EU GDPR',
-    src: 'https://qure-website-images.s3.ap-south-1.amazonaws.com/eu_gdpr_compliant_logo_website_658c7014fb.webp',
+    name: 'Explainable AI',
+    icon: (
+      <>
+        <circle cx="11" cy="11" r="6" />
+        <path d="M20 20l-4.5-4.5" strokeLinecap="round" />
+      </>
+    ),
   },
   {
-    name: 'HIPAA Compliant',
-    src: 'https://qure-website-images.s3.ap-south-1.amazonaws.com/HIPAA_website_264bc1157b.webp',
+    name: 'Privacy First',
+    icon: (
+      <>
+        <rect x="5" y="11" width="14" height="9" rx="2" />
+        <path d="M8 11V8a4 4 0 0 1 8 0v3" />
+      </>
+    ),
   },
   {
-    name: 'FDA Cleared',
-    src: 'https://qure-website-images.s3.ap-south-1.amazonaws.com/FDA_CLEARED_a014e0c8bb.webp',
+    name: 'Radiologist in the Loop',
+    icon: (
+      <>
+        <circle cx="12" cy="8" r="4" />
+        <path d="M4 21c1-4 4-6 8-6s7 2 8 6" strokeLinecap="round" />
+      </>
+    ),
   },
 ];
 
 export default function PartnersSection() {
   return (
     <section className="bg-[#0A1823] py-8 overflow-hidden">
-      {/* Logo slider */}
+      {/* Tag slider */}
       <div className="relative mx-auto max-w-7xl overflow-hidden py-4">
         {/* Left & Right gradient fade masks */}
         <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-24 sm:w-36 bg-gradient-to-r from-[#0A1823] to-transparent" />
         <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-24 sm:w-36 bg-gradient-to-l from-[#0A1823] to-transparent" />
 
         <div className="flex w-max items-center animate-marquee hover:[animation-play-state:paused]">
-          {[...partnerLogos, ...partnerLogos].map((name, i) => (
+          {[...capabilityTags, ...capabilityTags].map((name, i) => (
             <div
               key={i}
               className="mx-6 flex h-14 items-center justify-center px-4 rounded-xl border border-white/10 bg-white/[0.03] text-sm font-medium text-gray-300 whitespace-nowrap hover:border-white/25 hover:text-white transition-all shadow-sm"
@@ -60,30 +77,25 @@ export default function PartnersSection() {
       {/* Divider */}
       <div className="mx-auto max-w-[81rem] h-[1px] w-full bg-gradient-to-r from-transparent via-[#C0CCDA]/25 to-transparent my-6" />
 
-      {/* Compliance badges */}
-      <div className="mx-auto w-full max-w-2xl px-6 py-4">
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 items-center justify-center">
-          {complianceBadges.map((badge) => (
-            <div key={badge.name} className="flex items-center justify-center">
-              <img
-                src={badge.src}
-                alt={badge.name}
-                className="h-8 md:h-10 object-contain filter brightness-95 contrast-125 opacity-80 hover:opacity-100 transition-opacity"
-                onError={(e) => {
-                  // Fallback if image fails
-                  const target = e.currentTarget;
-                  target.style.display = 'none';
-                  if (target.nextElementSibling) {
-                    (target.nextElementSibling as HTMLElement).style.display = 'flex';
-                  }
-                }}
-              />
-              <div
-                style={{ display: 'none' }}
-                className="h-9 px-3 rounded-lg border border-white/20 bg-white/5 items-center justify-center text-[11px] font-bold text-gray-300"
+      {/* Trust badges */}
+      <div className="mx-auto w-full max-w-4xl px-6 py-4">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 items-center justify-center">
+          {trustBadges.map((badge) => (
+            <div
+              key={badge.name}
+              className="flex items-center justify-center gap-2.5 h-12 px-3 rounded-xl border border-white/15 bg-white/5 text-sm font-semibold text-gray-200 hover:border-[#00DCCE]/50 hover:text-white transition-colors"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                className="h-5 w-5 flex-none text-[#00DCCE]"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                aria-hidden="true"
               >
-                {badge.name}
-              </div>
+                {badge.icon}
+              </svg>
+              <span className="whitespace-nowrap">{badge.name}</span>
             </div>
           ))}
         </div>
